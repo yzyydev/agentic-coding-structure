@@ -21,7 +21,7 @@ ai_engineering_structure/
 ├── specs/              # Feature specifications
 │   ├── SPECS.md        # Documentation for specs system
 │   └── openai_reasoning.md
-└── README.md           # This file
+└── README.md           
 ```
 
 ## Key Components
