@@ -1,4 +1,4 @@
-# AI Engineering Structure
+# AI assisted development Structure
 
 A modern project structure optimized for efficient AI-assisted development using Claude Code and OpenAI Codex.
 
@@ -9,7 +9,7 @@ This repository provides a standardized structure for AI-enhanced software devel
 ## Directory Structure
 
 ```
-ai_engineering_structure/
+ai_assisted_development_structure/
 ├── .claude/
 │   └── commands/       # Custom Claude Code command definitions
 │       ├── COMMANDS.md # Documentation for commands system
