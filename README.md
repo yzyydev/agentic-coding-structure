@@ -11,6 +11,9 @@ This repository provides a standardized structure for AI-enhanced software devel
 ```
 ai_assisted_development_structure/
 ├── .claude/
+│   ├── agents/         # Custom subagent definitions for Claude Code
+│   │   ├── api-documenter.md
+│   │   └── prd-drafter.md
 │   └── commands/       # Custom Claude Code command definitions
 │       ├── COMMANDS.md # Documentation for commands system
 │       └── prime.md    # Context initialization command
@@ -21,7 +24,7 @@ ai_assisted_development_structure/
 ├── specs/              # Feature specifications
 │   ├── SPECS.md        # Documentation for specs system
 │   └── openai_reasoning.md
-└── README.md           
+└── README.md
 ```
 
 ## Key Components
@@ -34,7 +37,19 @@ Custom reusable commands that streamline interactions with Claude Code:
 - **Standardized Workflows**: Create commands for code generation, testing, analysis, and more
 - **Invocation Syntax**: Use `/project:command_name` to execute commands
 
-### 2. AI Documentation (`ai_docs/`)
+### 2. Claude Subagents (`.claude/agents/`)
+
+Specialized AI assistants that operate in separate context windows for task-specific workflows:
+
+- **Context Preservation**: Each subagent maintains its own context window, preventing quality degradation in complex multi-stage tasks
+- **Specialized Expertise**: Custom system prompts tailored for specific domains (code review, API documentation, PRD drafting, etc.)
+- **Automatic Delegation**: Claude intelligently routes tasks to appropriate subagents based on context and requirements
+- **Tool Management**: Configure specific tool access for each subagent's needs
+- **File Format**: Markdown files with YAML frontmatter containing metadata (name, description, tools, model)
+- **Invocation Methods**: Both automatic delegation and explicit invocation by mentioning the subagent
+- **Locations**: Can be defined at project level (`.claude/agents/`) or user level (`~/.claude/agents/`)
+
+### 3. AI Documentation (`ai_docs/`)
 
 Specialized documentation that enhances AI models' understanding of your project:
 
@@ -43,7 +58,7 @@ Specialized documentation that enhances AI models' understanding of your project
 - **Enhanced Generation**: Helps Claude generate code aligned with your project's patterns
 - **Invocation Syntax**: Use `@[path/to/document]` to reference docs in conversations
 
-### 3. Feature Specifications (`specs/`)
+### 4. Feature Specifications (`specs/`)
 
 Structured specifications for planned features:
 
@@ -94,6 +109,31 @@ The `prime.md` command fills Claude's context window with essential project info
 
 This allows Claude to provide more accurate assistance with your project.
 
+## Creating Custom Subagents
+
+Subagents use a simple markdown format with YAML frontmatter:
+
+```markdown
+---
+name: your-agent-name
+description: When and how this agent should be used
+tools: tool1, tool2, tool3  # Optional - inherits all tools if omitted
+model: sonnet              # Optional - sonnet, opus, or haiku
+color: blue               # Optional - agent color in UI
+---
+
+Your agent's system prompt goes here. Define the role, capabilities,
+and approach to solving problems. Include specific instructions,
+best practices, and any constraints the agent should follow.
+```
+
+**Example Subagent Types:**
+- Code reviewers for specific languages or frameworks
+- API documentation specialists
+- Test writers and debugging experts
+- Performance optimization specialists
+- Security auditors
+
 ## Best Practices
 
 1. **Keep Documentation Current**: Update AI docs as your codebase evolves
@@ -101,11 +141,13 @@ This allows Claude to provide more accurate assistance with your project.
 3. **Standardize Commands**: Create consistent commands for common tasks
 4. **Use Version Control**: Commit changes to AI artifacts alongside code changes
 5. **Include Examples**: Add representative code snippets to aid AI understanding
+6. **Create Focused Subagents**: Design single-purpose subagents with detailed system prompts and appropriate tool restrictions
 
 ## Getting Started
 
 1. Clone this repository or use it as a template
 2. Customize the structure for your project's needs
 3. Add your project-specific documentation to each section
-4. Commit changes to version control
-5. Use the prime command in Claude Code to initialize context
+4. Create custom subagents for your common workflows
+5. Commit changes to version control
+6. Use the prime command in Claude Code to initialize context
